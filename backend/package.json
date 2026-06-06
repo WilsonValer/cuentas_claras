@@ -1,0 +1,20 @@
+{
+  "name": "cuenta-clara-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Cuenta Clara MVP",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0",
+    "sequelize": "^6.37.8"
+  }
+}

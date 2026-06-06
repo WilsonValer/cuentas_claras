@@ -1,0 +1,162 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.detail-wrapper {
+  display: grid;
+  gap: 1rem;
+}
+
+.event-header,
+.card,
+.summary-grid article,
+.state-card {
+  background: #fff;
+  border: 1px solid #d9e2ec;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.event-header h1 {
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+
+.event-header p {
+  margin: 0.2rem 0;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.summary-grid h3,
+.summary-grid p {
+  margin: 0;
+}
+
+.summary-grid h3 {
+  font-size: 0.82rem;
+  color: #486581;
+  margin-bottom: 0.2rem;
+}
+
+.summary-grid p {
+  font-weight: 700;
+}
+
+.forms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  border: 1px solid #bcccdc;
+  border-radius: 8px;
+  padding: 0.45rem 0.55rem;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  /*padding: 0.48rem 0.6rem;*/
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button.pay {
+  background: #15803d;
+  color: #fff;
+}
+
+button.pending {
+  background: #eab308;
+  color: #1f2937;
+}
+
+button.edit {
+  background: #2563eb;
+  color: #fff;
+}
+
+button.save {
+  background: #0f766e;
+  color: #fff;
+}
+
+button.danger {
+  background: #b91c1c;
+  color: #fff;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  padding: 0.55rem;
+  vertical-align: top;
+}
+
+.actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.item-list {
+  margin: 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.item-list li {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.item-list input {
+  max-width: 130px;
+}
+
+.error {
+  border-color: #fecaca;
+  color: #991b1b;
+  background: #fef2f2;
+}

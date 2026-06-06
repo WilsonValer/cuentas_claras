@@ -1,0 +1,33 @@
+<section class="wrapper">
+  <a routerLink="/" class="back-link">Volver al inicio</a>
+
+  <h1>Crear almuerzo</h1>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-card">
+    <label>
+      Nombre del almuerzo
+      <input formControlName="name" placeholder="Cumpleaños de Jorge" />
+    </label>
+
+    <label>
+      Fecha
+      <input type="date" formControlName="event_date" />
+    </label>
+
+    <label>
+      Pago la cuenta
+      <input formControlName="payer_name" placeholder="Wilson Valer" />
+    </label>
+
+    <label>
+      Descripcion (opcional)
+      <textarea rows="3" formControlName="description"></textarea>
+    </label>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+    <button type="submit" [disabled]="saving">
+      {{ saving ? 'Guardando...' : 'Crear almuerzo' }}
+    </button>
+  </form>
+</section>

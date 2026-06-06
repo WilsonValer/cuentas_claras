@@ -1,0 +1,16 @@
+{
+  "name": "cuenta-clara",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "start": "concurrently \"npm run start --workspace backend\" \"npm run start --workspace frontend\"",
+    "dev": "concurrently \"npm run dev --workspace backend\" \"npm run start --workspace frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

@@ -1,0 +1,157 @@
+<section *ngIf="loading" class="state-card">Cargando detalle...</section>
+<section *ngIf="errorMessage" class="state-card error">{{ errorMessage }}</section>
+
+<section *ngIf="event" class="detail-wrapper">
+  <a routerLink="/" class="back-link">Volver al inicio</a>
+
+  <header class="event-header">
+    <h1>{{ event.name }}</h1>
+    <p>Fecha: {{ event.event_date | date: 'dd/MM/yyyy' }}</p>
+    <p>Pago la cuenta: {{ event.payer_name }}</p>
+    <p *ngIf="event.description">{{ event.description }}</p>
+  </header>
+
+  <section class="summary-grid">
+    <article>
+      <h3>Total general</h3>
+      <p>{{ event.summary.total_general | currency: 'PEN':'symbol':'1.2-2' }}</p>
+    </article>
+    <article>
+      <h3>Total pagado</h3>
+      <p>{{ event.summary.total_paid | currency: 'PEN':'symbol':'1.2-2' }}</p>
+    </article>
+    <article>
+      <h3>Total pendiente</h3>
+      <p>{{ event.summary.total_pending | currency: 'PEN':'symbol':'1.2-2' }}</p>
+    </article>
+    <article>
+      <h3>Participantes</h3>
+      <p>{{ event.summary.participants }}</p>
+    </article>
+    <article>
+      <h3>Pagaron</h3>
+      <p>{{ event.summary.paid_count }}</p>
+    </article>
+    <article>
+      <h3>Faltan pagar</h3>
+      <p>{{ event.summary.pending_count }}</p>
+    </article>
+  </section>
+
+  <section class="forms-grid">
+    <form [formGroup]="participantForm" (ngSubmit)="addParticipant()" class="card">
+      <h2>Agregar participante</h2>
+      <input formControlName="fullName" placeholder="Carlos Suarez" />
+      <button type="submit">Registrar</button>
+    </form>
+
+    <form [formGroup]="itemForm" (ngSubmit)="addItem()" class="card">
+      <h2>Agregar consumo</h2>
+      <select formControlName="participantId">
+        <option [value]="0" disabled>Selecciona participante</option>
+        <option *ngFor="let participant of event.participants" [value]="participant.id">
+          {{ participant.full_name }}
+        </option>
+      </select>
+      <input formControlName="description" placeholder="Arroz con pollo" />
+      <input formControlName="price" type="number" min="0" step="0.01" placeholder="18" />
+      <button type="submit">Agregar item</button>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Participantes</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Persona</th>
+            <th>Consumos</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Metodo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let participant of event.participants">
+            <td>{{ participant.full_name }}</td>
+            <td>
+              <ul *ngIf="participant.items?.length; else noItems" class="item-list">
+                <li *ngFor="let item of participant.items">
+                  <ng-container *ngIf="editingItemId === item.id; else readOnlyItem">
+                    <input
+                      type="text"
+                      [(ngModel)]="editItemDraft.description"
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Descripcion"
+                    />
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      [(ngModel)]="editItemDraft.price"
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Precio"
+                    />
+                    <button type="button" class="save" (click)="saveItem(item)" [disabled]="savingItemId === item.id">
+                      Guardar
+                    </button>
+                    <button type="button" class="pending" (click)="cancelEditItem()">Cancelar</button>
+                  </ng-container>
+                  <ng-template #readOnlyItem>
+                    <span>{{ item.description }} ({{ item.price | currency: 'PEN':'symbol':'1.2-2' }})</span>
+                    <button type="button" class="edit" (click)="beginEditItem(item)">edit</button>
+                  </ng-template>
+                </li>
+              </ul>
+              <ng-template #noItems>-</ng-template>
+            </td>
+            <td>{{ participant.total | currency: 'PEN':'symbol':'1.2-2' }}</td>
+            <td>{{ participant.payment_status }}</td>
+            <td>
+              <select [(ngModel)]="paymentMethodByParticipant[participant.id]" [ngModelOptions]="{ standalone: true }">
+                <option *ngFor="let method of paymentMethods" [ngValue]="method">{{ method }}</option>
+              </select>
+            </td>
+            <td class="actions">
+              <button
+                type="button"
+                class="pay"
+                (click)="markPaid(participant)"
+                [disabled]="participant.payment_status === 'PAID'"
+              >
+                Pago
+              </button>
+              <button
+                type="button"
+                class="pending"
+                (click)="markPending(participant)"
+                [disabled]="participant.payment_status === 'PENDING'"
+              >
+                Pend
+              </button>
+              <button
+                type="button"
+                class="danger"
+                (click)="deleteParticipant(participant)"
+                [disabled]="deletingParticipantId === participant.id"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" *ngIf="event.summary.pending_people.length">
+    <h2>Personas que faltan pagar</h2>
+    <ul>
+      <li *ngFor="let pending of event.summary.pending_people">
+        {{ pending.full_name }}: {{ pending.amount | currency: 'PEN':'symbol':'1.2-2' }}
+      </li>
+    </ul>
+  </section>
+</section>

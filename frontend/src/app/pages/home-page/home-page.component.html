@@ -1,0 +1,35 @@
+<section class="page-header">
+  <div>
+    <h1>Cuenta Clara</h1>
+    <p>Controla quien falta pagar en cada almuerzo grupal.</p>
+  </div>
+  <a routerLink="/events/new" class="primary-button">Crear nuevo almuerzo</a>
+</section>
+
+<section *ngIf="loading" class="state-card">Cargando almuerzos...</section>
+<section *ngIf="errorMessage" class="state-card error">{{ errorMessage }}</section>
+
+<section *ngIf="!loading" class="events-grid">
+  <article class="event-card" *ngFor="let event of events">
+    <header>
+      <h2>{{ event.name }}</h2>
+      <span class="status" [class.completed]="event.status === 'COMPLETED'" [class.archived]="event.status === 'ARCHIVED'">
+        {{ event.status }}
+      </span>
+    </header>
+
+    <p><strong>Fecha:</strong> {{ event.event_date | date: 'dd/MM/yyyy' }}</p>
+    <p><strong>Pago:</strong> {{ event.payer_name }}</p>
+    <p><strong>Total:</strong> {{ event.total_general | currency: 'PEN':'symbol':'1.2-2' }}</p>
+    <p><strong>Pagado:</strong> {{ event.total_paid | currency: 'PEN':'symbol':'1.2-2' }}</p>
+    <p><strong>Pendiente:</strong> {{ event.total_pending | currency: 'PEN':'symbol':'1.2-2' }}</p>
+    <p><strong>Faltan pagar:</strong> {{ event.pending_people }}</p>
+
+    <div class="actions">
+      <a [routerLink]="['/events', event.id]" class="link-button">Ver detalle</a>
+      <button type="button" (click)="deleteEvent(event.id)" class="danger-button">Eliminar</button>
+    </div>
+  </article>
+
+  <article *ngIf="!events.length" class="state-card">Aun no hay almuerzos registrados.</article>
+</section>
