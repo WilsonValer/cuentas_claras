@@ -55,8 +55,8 @@ async function createParticipant(req, res, next) {
 
     const result = await client.query(
       `INSERT INTO participants
-       (lunch_event_id, full_name, payment_status)
-       VALUES ($1, $2, 'PENDING')
+       (lunch_event_id, full_name, payment_status, created_at, updated_at)
+       VALUES ($1, $2, 'PENDING', NOW(), NOW())
        RETURNING *`,
       [eventId, full_name]
     );

@@ -41,8 +41,8 @@ async function createItem(req, res, next) {
 
     const result = await pool.query(
       `INSERT INTO consumption_items
-       (participant_id, description, price)
-       VALUES ($1, $2, $3)
+       (participant_id, description, price, created_at, updated_at)
+       VALUES ($1, $2, $3, NOW(), NOW())
        RETURNING *`,
       [participantId, description, price]
     );

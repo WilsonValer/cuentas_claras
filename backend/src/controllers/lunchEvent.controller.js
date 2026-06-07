@@ -64,8 +64,8 @@ async function createLunchEvent(req, res, next) {
 
     const result = await pool.query(
       `INSERT INTO lunch_events
-       (name, event_date, payer_name, description, status, expires_at)
-       VALUES ($1, $2, $3, $4, 'PENDING', COALESCE($5, ($2::date + INTERVAL '30 days')::date))
+       (name, event_date, payer_name, description, status, expires_at, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, 'PENDING', COALESCE($5, ($2::date + INTERVAL '30 days')::date), NOW(), NOW())
        RETURNING *`,
       [name, event_date, payer_name, description || null, expires_at || null]
     );
