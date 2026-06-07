@@ -3,7 +3,7 @@ require('dotenv').config();
 const app = require('./app');
 const { initOrm } = require('./models');
 
-const PORT = Number(process.env.PORT) || 4000;
+const PORT = Number(process.env.PORT) || 4001;
 
 async function startServer() {
   try {

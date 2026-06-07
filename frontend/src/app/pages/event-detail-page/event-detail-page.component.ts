@@ -102,7 +102,7 @@ export class EventDetailPageComponent implements OnInit {
         this.errorMessage = 'No se pudo registrar el participante.';
       }
     });
-  }
+  } 
 
   addItem(): void {
     if (this.itemForm.invalid) {
