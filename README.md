@@ -16,7 +16,7 @@ Aplicativo web para controlar consumos y pagos en almuerzos grupales.
 
 ## Configuracion
 
-1. Copia `backend/.env.example` a `backend/.env` y completa credenciales.
+1. Configura `backend/.env` con las credenciales de tu base de datos (Supabase en produccion) y define `CORS_ORIGIN` con la URL del frontend (por ejemplo `https://tu-app.vercel.app`).
 2. Crea la base de datos `cuenta_clara` en PostgreSQL.
 3. Ejecuta el script `backend/sql/schema.sql`.
 
