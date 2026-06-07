@@ -12,7 +12,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class LunchEventsApiService {
-  private readonly baseUrl = 'http://localhost:4000/api';
+  private readonly baseUrl = 'https://cuentas-claras-d5qx.onrender.com/api';
 
   constructor(private readonly http: HttpClient) {}
 
